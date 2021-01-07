@@ -1,28 +1,10 @@
-// const http = require('http');
-// http.createServer((req, res) => {
-//   if (req.method === 'POST') {
-//     let body = '';
-//     req.on('data', data => { body += data });
-//     req.on('end', () => {
-//       console.log(body);
-//     });
-//   }
-// }).listen(5000);
+const http = require('http'); // http is built into Node.js, but must be imported to access
+const port = 3000;
 
-// const fs = require('fs');
-// const server = require('http').createServer();
-// server.on('request', (req, res) => {
-//   const src = fs.createReadStream('./bigfile.txt');
-//   src.on('data', data => res.write(data));
-//   src.on('end', () => res.end());
-// });
-// server.listen(5000);
-
-
-const fs = require('fs');
-const server = require('http').createServer();
-server.on('request', (req, res) => {
-  const src = fs.createReadStream('./bigfile.txt');
-  src.pipe(res);
-});
-server.listen(5000);
+http.createServer((req, res) => {
+    res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+    res.write('Hello JS WORLD!');
+    res.end();
+}).listen(port);
