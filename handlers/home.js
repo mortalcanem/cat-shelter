@@ -77,7 +77,7 @@ module.exports = (req, res) => {
     let formData = "";
     req.on('data', (data) => {
       console.log("the breed form data is ", data);
-      formData += data;
+      formData += data
       console.log("the new data is ", formData)
     })
   } else {
