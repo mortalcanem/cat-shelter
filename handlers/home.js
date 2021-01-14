@@ -2,7 +2,7 @@ const url = require('url');
 const fs = require('fs'); // File System
 const path = require('path');
 const qs = require('querystring');
-const formidable = require('formidable');
+const formidable = require('formidable'); // import non built in Node library
 const breeds = require ('../data/breeds.json'); // Imported the breeds json so we can use it! 
 const cats = require('../data/cats.json');
 
@@ -67,39 +67,51 @@ module.exports = (req, res) => {
     })
   } else if (pathname === '/cats/add-cat' && req.method === 'POST') {
 
-    const index = fs.createReadStream(filePath);
+    // const index = fs.createReadStream(filePath);
 
-    index.on('data', (data) => {
-      res.write(data);
-    });
-    index.on('end', () => {
-      res.end();
-    })
-    index.on('error', (err) => {
-      console.log(err);
-    })
+      let form = new formidable.IncomingForm();
+      //console.log(form);
+      form.parse(req, (err, fields, files) => {
+        if (err) throw err;
+        console.log("the fields are ", fields);
+        console.log("the file(s) are ", files)
+
+
+
+      });
+
+    // index.on('data', (data) => {
+    //   res.write(data);
+    // });
+    // index.on('end', () => {
+    //   res.end();
+    // })
+    // index.on('error', (err) => {
+    //   console.log(err);
+    // })
 
   } else if (pathname === '/cats/add-breed' && req.method === 'POST') {
     let formData = "";
 
     req.on('data', (data) => {
-      console.log("the breed form data is ", data.toString());
+      //console.log("the breed form data (toString()) is ", data);
       formData += data
-      console.log("the new data is ", formData)
-      console.log('I want the form data to be just "testing"')
+      //console.log("the new data is ", formData);
+      //console.log('I want the form data to be just "testing"');
       let parsedData = qs.parse(formData);
-      console.log("the parsed data is ", parsedData.breed)
+      //console.log("the parsed data is ", parsedData.breed);
 
       fs.readFile("./data/breeds.json", 'utf8' , (err, data) => {
         if (err) {
           console.error(err)
           return
         }
+        //console.log('the raw dataJSON is ', data )
         let currentBreeds = JSON.parse(data);
         currentBreeds.push(parsedData.breed);
-        console.log("the breeds.json parsed data is the varible currentBreeds " ,currentBreeds);
+        //console.log("the breeds.json parsed data is the varible currentBreeds " ,currentBreeds);
         let updatedBreeds = JSON.stringify(currentBreeds);
-        console.log("JSON updated ready to save updated breeds", updatedBreeds);
+        //console.log("JSON updated ready to save updated breeds", updatedBreeds);
 
         fs.writeFile('./data/breeds.json', updatedBreeds, 'utf-8', (err) => {
           if (err) {
