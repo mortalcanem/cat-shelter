@@ -1,23 +1,17 @@
 {
-  "name": "02-streams",
-  "version": "1.0.0",
-  "description": "The Cat Shelter App.",
-  "main": "index.js",
+  "name": "cat-shelter",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "nodemon ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ronscode/cat-shelter.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ronscode/cat-shelter/issues"
-  },
-  "homepage": "https://github.com/ronscode/cat-shelter#readme",
   "dependencies": {
-    "formidable": "^1.2.2"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "formidable": "^1.2.2",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   }
 }
